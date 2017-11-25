@@ -31,3 +31,21 @@ ul.productProps {
 ul.productProps li {
   list-style-type: none;
 }
+
+.productInfo {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 8px 2px;
+  margin: 2px;
+  width: 450px;
+  background-color: #ccc;
+  border-radius: 5px;
+
+}
+
+.productInfo img {
+  margin: 3px;
+  float: left;
+  border: 1px solid black;
+  max-width: 150px;
+}
