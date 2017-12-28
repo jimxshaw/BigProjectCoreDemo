@@ -7,9 +7,9 @@ input, textarea {
   width: 200px;
 }
 
-input[type=submit] {
-  width: auto;
-}
+  input[type=submit] {
+    width: auto;
+  }
 
 label {
   font-size: 16px;
@@ -19,18 +19,18 @@ label {
   background-color: #ccc;
 }
 
-#theForm input[type=submit] {
-  background-color: green;
-  color: white;
-}
+  #theForm input[type=submit] {
+    background-color: green;
+    color: white;
+  }
 
 ul.productProps {
   font-size: small;
 }
 
-ul.productProps li {
-  list-style-type: none;
-}
+  ul.productProps li {
+    list-style-type: none;
+  }
 
 .productInfo {
   border: 1px solid #ccc;
@@ -40,12 +40,35 @@ ul.productProps li {
   width: 450px;
   background-color: #ccc;
   border-radius: 5px;
-
 }
 
-.productInfo img {
-  margin: 3px;
-  float: left;
-  border: 1px solid black;
-  max-width: 150px;
+  .productInfo img {
+    margin: 3px;
+    float: left;
+    border: 1px solid black;
+    max-width: 150px;
+  }
+
+#loginToggle {
+  cursor: pointer;
 }
+
+.popupForm {
+  padding: 5px;
+  border: 2px black inset;
+  display: inline-block;
+}
+
+  .popupForm input {
+    width: 200px;
+  }
+
+  .popupForm label {
+    width: 150px;
+    display: inline-block;
+  }
+
+  .popupForm input[type=checkbox],
+  .popupForm input[type=submit] {
+    width: auto;
+  }
