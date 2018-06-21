@@ -14,6 +14,10 @@ namespace DutchTreat.Data
 
     public DbSet<Order> Orders { get; set; }
 
+    public DutchContext(DbContextOptions<DutchContext> options)
+                        : base(options)
+    {
 
+    }
   }
 }
