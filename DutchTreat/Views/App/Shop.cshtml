@@ -5,9 +5,17 @@
 
 @foreach (var product in Model)
 {
-  <li>Title: @product.Title</li>
-  <li>Artist: @product.Artist</li>
-  <li>Price: @product.Price</li>
-
-  <br />
+  <div class="col-md-3">
+    <div class="well well-sm">
+      <img src="~/img/@(product.ArtId).jpg" class="img-responsive" alt="@product.Title" />
+      <h3>@product.Category - @product.Size</h3>
+      <ul class="productProps">
+        <li>Price: @product.Price</li>
+        <li>Artist: @product.Artist</li>
+        <li>Title: @product.Title</li>
+        <li>Description: @product.ArtDescription</li>
+      </ul>
+      <button id="buyButton">Buy</button>
+    </div>
+  </div>
 }
