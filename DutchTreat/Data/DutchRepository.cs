@@ -42,6 +42,27 @@ namespace DutchTreat.Data
     }
 
 
+    public Order GetOrderById(int id)
+    {
+      try
+      {
+        _logger.LogInformation("Get order by id was called...");
+
+        return _context.Orders
+                       .Include(o => o.Items)
+                       .ThenInclude(i => i.Product)
+                       .Where(o => o.Id == id)
+                       .FirstOrDefault();
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError($"Failed to get order by id: {ex}");
+
+        return null;
+      }
+    }
+
+
     public IEnumerable<Product> GetProducts()
     {
       try
