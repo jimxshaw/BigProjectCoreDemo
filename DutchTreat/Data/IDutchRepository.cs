@@ -5,12 +5,13 @@ namespace DutchTreat.Data
 {
   public interface IDutchRepository
   {
-    IEnumerable<Product> GetProducts();
+    IEnumerable<Order> GetOrders();
 
+    IEnumerable<Product> GetProducts();
 
     IEnumerable<Product> GetProductsByCategory(string category);
 
-
     bool SaveAll();
+
   }
 }

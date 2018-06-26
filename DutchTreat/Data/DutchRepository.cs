@@ -1,4 +1,5 @@
 ﻿using DutchTreat.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,26 @@ namespace DutchTreat.Data
     {
       _context = context;
       _logger = logger;
+    }
+
+
+    public IEnumerable<Order> GetOrders()
+    {
+      try
+      {
+        _logger.LogInformation("Get orders was called...");
+
+        return _context.Orders
+                       .Include(o => o.Items)
+                       .OrderBy(o => o.OrderNumber)
+                       .ToList();
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError($"Failed to get orders: {ex}");
+
+        return null;
+      }
     }
 
 
