@@ -14,6 +14,7 @@ namespace DutchTreat.Data
     private readonly DutchContext _context;
     private readonly ILogger<DutchRepository> _logger;
 
+
     public DutchRepository(DutchContext context, ILogger<DutchRepository> logger)
     {
       _context = context;
@@ -103,6 +104,12 @@ namespace DutchTreat.Data
       }
 
 
+    }
+
+
+    public void AddEntity(object model)
+    {
+      _context.Add(model);
     }
 
 
