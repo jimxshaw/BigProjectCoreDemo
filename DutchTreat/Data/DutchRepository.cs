@@ -29,6 +29,7 @@ namespace DutchTreat.Data
 
         return _context.Orders
                        .Include(o => o.Items)
+                       .ThenInclude(i => i.Product)
                        .OrderBy(o => o.OrderNumber)
                        .ToList();
       }
