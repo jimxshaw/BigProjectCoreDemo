@@ -34,7 +34,7 @@ namespace DutchTreat.Controllers
     {
       try
       {
-        return Ok(_repository.GetOrders());
+        return Ok(_mapper.Map<IEnumerable<Order>, IEnumerable<OrderViewModel>>(_repository.GetOrders()));
       }
       catch (Exception ex)
       {
@@ -78,12 +78,7 @@ namespace DutchTreat.Controllers
       {
         if (ModelState.IsValid)
         {
-          var newOrder = new Order()
-          {
-            Id = model.OrderId,
-            OrderDate = model.OrderDate,
-            OrderNumber = model.OrderNumber
-          };
+          var newOrder = _mapper.Map<OrderViewModel, Order>(model);
 
           if (newOrder.OrderDate == DateTime.MinValue)
           {
@@ -94,14 +89,7 @@ namespace DutchTreat.Controllers
 
           if (_repository.SaveAll())
           {
-            var orderVM = new OrderViewModel()
-            {
-              OrderId = newOrder.Id,
-              OrderDate = newOrder.OrderDate,
-              OrderNumber = newOrder.OrderNumber
-            };
-
-            return Created($"/api/orders/{orderVM.OrderId}", orderVM);
+            return Created($"/api/orders/{newOrder.Id}", _mapper.Map<Order, OrderViewModel>(newOrder));
           }
         }
         else

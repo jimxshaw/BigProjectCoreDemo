@@ -18,7 +18,8 @@ namespace DutchTreat.Data
       // If property names don't match then 
       // clarifications are needed.
       CreateMap<Order, OrderViewModel>()
-               .ForMember(o => o.OrderId, ex => ex.MapFrom(o => o.Id));
+               .ForMember(o => o.OrderId, ex => ex.MapFrom(o => o.Id))
+               .ReverseMap();
     }
   }
 }
