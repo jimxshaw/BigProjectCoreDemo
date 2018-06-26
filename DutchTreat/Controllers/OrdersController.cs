@@ -1,4 +1,5 @@
-﻿using DutchTreat.Data;
+﻿using AutoMapper;
+using DutchTreat.Data;
 using DutchTreat.Data.Entities;
 using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,15 @@ namespace DutchTreat.Controllers
   {
     private readonly IDutchRepository _repository;
     private readonly ILogger<OrdersController> _logger;
-
+    private readonly IMapper _mapper;
 
     public OrdersController(IDutchRepository repository,
-                              ILogger<OrdersController> logger)
+                            ILogger<OrdersController> logger,
+                            IMapper mapper)
     {
       _repository = repository;
       _logger = logger;
+      _mapper = mapper;
     }
 
 
@@ -51,7 +54,7 @@ namespace DutchTreat.Controllers
 
         if (order != null)
         {
-          return Ok(order);
+          return Ok(_mapper.Map<Order, OrderViewModel>(order));
         }
         else
         {
