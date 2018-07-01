@@ -22,17 +22,28 @@ namespace DutchTreat.Data
     }
 
 
-    public IEnumerable<Order> GetOrders()
+    public IEnumerable<Order> GetOrders(bool includeItems)
     {
       try
       {
         _logger.LogInformation("Get orders was called...");
 
-        return _context.Orders
-                       .Include(o => o.Items)
-                       .ThenInclude(i => i.Product)
-                       .OrderBy(o => o.OrderNumber)
-                       .ToList();
+        if (includeItems)
+        {
+          return _context.Orders
+                         .Include(o => o.Items)
+                         .ThenInclude(i => i.Product)
+                         .OrderBy(o => o.OrderNumber)
+                         .ToList();
+        }
+        else
+        {
+          return _context.Orders
+                         .OrderBy(o => o.OrderNumber)
+                         .ToList();
+        }
+
+
       }
       catch (Exception ex)
       {

@@ -5,7 +5,7 @@ namespace DutchTreat.Data
 {
   public interface IDutchRepository
   {
-    IEnumerable<Order> GetOrders();
+    IEnumerable<Order> GetOrders(bool includeItems);
 
     Order GetOrderById(int id);
 
