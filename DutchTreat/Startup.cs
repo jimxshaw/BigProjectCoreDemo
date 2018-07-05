@@ -73,7 +73,10 @@ namespace DutchTreat
         using (var scope = app.ApplicationServices.CreateScope())
         {
           var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
-          seeder.Seed();
+
+          // Since Seed is an async method, we simply wait
+          // for it to complete before proceeding.
+          seeder.Seed().Wait();
         }
       }
 

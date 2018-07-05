@@ -1,5 +1,6 @@
 ﻿using DutchTreat.Data.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,17 +15,42 @@ namespace DutchTreat.Data
   {
     private readonly DutchContext _context;
     private readonly IHostingEnvironment _hosting;
+    private readonly UserManager<StoreUser> _userManager;
 
-    public DutchSeeder(DutchContext context, IHostingEnvironment hosting)
+    public DutchSeeder(DutchContext context,
+                       IHostingEnvironment hosting,
+                       UserManager<StoreUser> userManager)
     {
       _context = context;
       _hosting = hosting;
+      _userManager = userManager;
     }
 
 
-    public void Seed()
+    public async Task Seed()
     {
       _context.Database.EnsureCreated();
+
+      var user = await _userManager.FindByEmailAsync("jimxshaw@gmail.com");
+
+      if (user == null)
+      {
+        user = new StoreUser()
+        {
+          FirstName = "Jim",
+          LastName = "Shaw",
+          UserName = "jimxshaw@gmail.com",
+          Email = "jimxshaw@gmail.com"
+        };
+
+        var result = await _userManager.CreateAsync(user, "P@ssword123!");
+
+        if (result != IdentityResult.Success)
+        {
+          throw new InvalidOperationException("Failed to create default user");
+        }
+
+      }
 
       if (!_context.Products.Any())
       {
@@ -41,6 +67,7 @@ namespace DutchTreat.Data
         {
           OrderDate = DateTime.Now,
           OrderNumber = "10001",
+          User = user,
           Items = new List<OrderItem>()
           {
             new OrderItem()
