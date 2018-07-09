@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,10 +21,13 @@ namespace DutchTreat
   public class Startup
   {
     private readonly IConfiguration _config;
+    private readonly IHostingEnvironment _environment;
 
-    public Startup(IConfiguration config)
+    public Startup(IConfiguration config,
+                   IHostingEnvironment environment)
     {
       _config = config;
+      _environment = environment;
     }
 
     // This method gets called by the runtime. Use this method to add services to the container.
@@ -48,8 +52,13 @@ namespace DutchTreat
 
       services.AddScoped<IDutchRepository, DutchRepository>();
 
-      services.AddMvc()
-              .AddJsonOptions(option => option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+      services.AddMvc(options =>
+      {
+        if (_environment.IsProduction())
+        {
+          options.Filters.Add(new RequireHttpsAttribute());
+        }
+      }).AddJsonOptions(option => option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
