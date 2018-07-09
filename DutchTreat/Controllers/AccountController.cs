@@ -1,4 +1,5 @@
-﻿using DutchTreat.ViewModels;
+﻿using DutchTreat.Data.Entities;
+using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +15,10 @@ namespace DutchTreat.Controllers
   public class AccountController : Controller
   {
     private readonly ILogger<AccountController> _logger;
-    private readonly SignInManager<UserStore> _signInManager;
+    private readonly SignInManager<StoreUser> _signInManager;
 
     public AccountController(ILogger<AccountController> logger,
-      SignInManager<UserStore> signInManager)
+      SignInManager<StoreUser> signInManager)
     {
       _logger = logger;
       _signInManager = signInManager;
