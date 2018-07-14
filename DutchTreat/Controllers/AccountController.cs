@@ -16,12 +16,15 @@ namespace DutchTreat.Controllers
   {
     private readonly ILogger<AccountController> _logger;
     private readonly SignInManager<StoreUser> _signInManager;
+    private readonly UserManager<StoreUser> _userManager;
 
     public AccountController(ILogger<AccountController> logger,
-      SignInManager<StoreUser> signInManager)
+      SignInManager<StoreUser> signInManager,
+      UserManager<StoreUser> userManager)
     {
       _logger = logger;
       _signInManager = signInManager;
+      _userManager = userManager;
     }
 
 
@@ -73,6 +76,30 @@ namespace DutchTreat.Controllers
       await _signInManager.SignOutAsync();
 
       return RedirectToAction("Index", "App");
+    }
+
+
+    [HttpPost]
+    public async Task<IActionResult> CreateToken([FromBody] LoginViewModel model)
+    {
+      if (ModelState.IsValid)
+      {
+        var user = await _userManager.FindByNameAsync(model.Username);
+
+        if (user != null)
+        {
+          var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+
+          if (result.Succeeded)
+          {
+            // Create the token.
+
+          }
+        }
+
+      }
+
+      return BadRequest();
     }
   }
 }
