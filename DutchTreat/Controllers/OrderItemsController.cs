@@ -2,6 +2,8 @@
 using DutchTreat.Data;
 using DutchTreat.Data.Entities;
 using DutchTreat.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace DutchTreat.Controllers
 {
+  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   [Route("/api/orders/{orderid}/items")]
   public class OrderItemsController : Controller
   {
@@ -32,7 +35,7 @@ namespace DutchTreat.Controllers
     [HttpGet]
     public IActionResult Get(int orderId)
     {
-      var order = _repository.GetOrderById(orderId);
+      var order = _repository.GetOrderById(User.Identity.Name, orderId);
 
       if (order != null)
       {
@@ -46,7 +49,7 @@ namespace DutchTreat.Controllers
     [HttpGet("{id}")]
     public IActionResult Get(int orderId, int id)
     {
-      var order = _repository.GetOrderById(orderId);
+      var order = _repository.GetOrderById(User.Identity.Name, orderId);
 
       if (order != null)
       {
