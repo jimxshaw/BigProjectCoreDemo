@@ -39,6 +39,10 @@ namespace DutchTreat
         config.User.RequireUniqueEmail = true;
       }).AddEntityFrameworkStores<DutchContext>();
 
+      services.AddAuthentication()
+              .AddCookie()
+              .AddJwtBearer();
+
       services.AddDbContext<DutchContext>(config =>
       {
         config.UseSqlServer(_config.GetConnectionString("DutchConnectionString"));
