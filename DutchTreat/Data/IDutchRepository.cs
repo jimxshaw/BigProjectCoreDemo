@@ -7,6 +7,8 @@ namespace DutchTreat.Data
   {
     IEnumerable<Order> GetOrders(bool includeItems);
 
+    IEnumerable<Order> GetAllOrdersByUser(string username, bool includeItems);
+
     Order GetOrderById(int id);
 
     IEnumerable<Product> GetProducts();
